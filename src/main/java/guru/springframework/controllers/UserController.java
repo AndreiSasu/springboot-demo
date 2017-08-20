@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import guru.springframework.domain.Product;
 import guru.springframework.domain.User;
 import guru.springframework.services.RoleService;
 import guru.springframework.services.UserService;
@@ -36,12 +37,14 @@ public class UserController {
     public String edit(@PathVariable Integer id, Model model){
     	model.addAttribute("user", userService.getById(id));
     	model.addAttribute("userRoles", userService.getById(id).getRoles());
+    	model.addAttribute("allRoles", roleService.listAll());
         return "userform";
     }
     
     @RequestMapping("user/new")
     public String newProduct(Model model){
         model.addAttribute("user", new User());
+        model.addAttribute("allRoles", roleService.listAll());
         return "userform";
     }
     
@@ -49,5 +52,17 @@ public class UserController {
     public String delete(@PathVariable Integer id){
     	userService.delete(id);
         return "redirect:/users";
+    }
+    
+    @RequestMapping(value = "user", method = RequestMethod.POST)
+    public String saveUser(User user){
+    	userService.saveOrUpdate(user);
+        return "redirect:/user/" + user.getId();
+    }
+    
+    @RequestMapping("user/{id}")
+    public String showUser(@PathVariable Integer id, Model model){
+        model.addAttribute("user", userService.getById(id));
+        return "userdetails";
     }
 }
