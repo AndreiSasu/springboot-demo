@@ -43,7 +43,8 @@ public class UserController {
     
     @RequestMapping("user/new")
     public String newProduct(Model model){
-        model.addAttribute("user", new User());
+    	User user = new User();
+        model.addAttribute("user", user);
         model.addAttribute("allRoles", roleService.listAll());
         return "userform";
     }

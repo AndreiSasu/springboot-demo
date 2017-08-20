@@ -32,20 +32,26 @@
 					<input type="text" class="form-control" th:field="*{username}" />
 				</div>
 
-
-
-
 				<div class="container">
-					<h2>User Roles</h2>
+					<h2>User Roles:</h2>
 					<div th:if="${not #lists.isEmpty(allRoles)}">
 						<ul>
 							<li th:each="item, stat : ${allRoles}"><label
-								th:text="${stat.index}"></label> 
-								<input type="checkbox"
+								th:text="${stat.index}"></label> <input type="checkbox"
 								th:field="*{roles[__${stat.index}__]}" th:value="${item.id}" />
 								<label th:text="${item.role}"></label></li>
 						</ul>
-					</div>
+					</div> 
+					
+					
+					
+									
+				</div>
+
+				<div class="container">
+					<h2>State:</h2>
+					<input type="checkbox" th:field="*{enabled}" th:value="${enabled}" />
+					<label th:text="Enabled"></label>
 				</div>
 
 				<div class="row">
